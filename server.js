@@ -12,7 +12,8 @@ app.configure(function() {
 });
 
 var Todo = mongoose.model('Todo', {
-		text : String
+		text : String,
+		date : Date
 	});
 
 // listen (start app with node server.js) ======================================
@@ -45,6 +46,7 @@ console.log("App listening on port " + port);
 		// create a todo, information comes from AJAX request from Angular
 		Todo.create({
 			text : req.body.text,
+			date : Date.now(),
 			done : false
 		}, function(err, todo) {
 			if (err)
@@ -75,4 +77,21 @@ console.log("App listening on port " + port);
 				res.json(todos);
 			});
 		});
+	});
+	
+	// update time on a todo
+	app.post('/api/todos/update/:todo_id', function(req, res) {
+		Todo.update({_id : req.params.todo_id}, 
+			{date : req.body.date},
+			function(err, todo) {
+				if (err)
+					res.send(err);
+
+				// get and return all the todos after you update one
+				Todo.find(function(err, todos) {
+					if (err)
+						res.send(err)
+					res.json(todos);
+				});
+			});
 	});

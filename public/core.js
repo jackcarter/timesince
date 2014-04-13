@@ -1,11 +1,14 @@
-var scotchTodo = angular.module('scotchTodo', []);
+var scotchTodo = angular.module('timesince', ['relativeDate']);
 
 function mainController($scope, $http) {
 	$scope.formData = {};
+	$scope.dateString = '2013-09-08';
+    $scope.dateObject = new Date();
 
 	// when landing on the page, get all todos and show them
 	$http.get('/api/todos')
 		.success(function(data) {
+			console.log(data);
 			$scope.todos = data;
 		})
 		.error(function(data) {
@@ -27,6 +30,16 @@ function mainController($scope, $http) {
 	// delete a todo after checking it
 	$scope.deleteTodo = function(id) {
 		$http.delete('/api/todos/' + id)
+			.success(function(data) {
+				$scope.todos = data;
+			})
+			.error(function(data) {
+				console.log('Error: ' + data);
+			});
+	};
+	
+	$scope.updateTodo = function(id) {
+		$http.post('api/todos/update/' + id, {date : Date.now()})
 			.success(function(data) {
 				$scope.todos = data;
 			})
