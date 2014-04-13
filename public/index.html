@@ -17,6 +17,7 @@
 
 	<!-- SPELLS -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><!-- load bootstrap -->
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
 	<script src="core.js"></script>
 	<script src="angular-relative-date.js"></script>
@@ -29,20 +30,32 @@
 		</div>
 
 		<!-- TODO LIST -->
-		<div id="todo-list" class="row">
-			<div class="col-sm-4 col-sm-offset-4">
-				<!-- LOOP OVER THE TODOS IN $scope.todos -->
+		<div class="panel-group" id="accordion">
+		  <div class="panel panel-default" ng-repeat="todo in todos">
+		    <div class="panel-heading">
+		      <h4 class="panel-title">
 				<div class = "container">
-				<div class="row" ng-repeat="todo in todos">
-					<button type="button" class="btn btn-primary col-sm-3" ng-click="updateTodo(todo._id)">Done</button>
-					<div class="col-sm-6">{{ todo.text }} <strong>{{todo.date | relativeDate }}</strong></div>
-					<button type="button" class="btn btn-danger col-sm-3" ng-click="deleteTodo(todo._id)">Delete</button>
+				  <div class="row">
+		            <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{todo._id}}">
+		              <div class="col-sm-4">{{ todo.text }}</div>
+				      <div class="col-sm-4 col-sm-offset-4"><strong>{{todo.date | relativeDate }}</strong></div>
+		            </a>
+		          </div>
+		        </div>
+		      </h4>
+		    </div>
+		    <div id="collapse{{todo._id}}" class="panel-collapse collapse">
+		      <div class="panel-body">
+		        <div class = "container">
+				  <div class="row">
+				    <button type="button" class="btn-xs btn-primary col-sm-2" ng-click="updateTodo(todo._id)">Done</button>
+				    <button type="button" class="btn-xs btn-danger col-sm-2" ng-click="deleteTodo(todo._id)">Delete</button>
+				  </div>
 				</div>
-				</div>
-
-			</div>
+		      </div>
+		    </div>
+		  </div>
 		</div>
-
 		<!-- FORM TO CREATE TODOS -->
 		<div id="todo-form" class="row">
 			<div class="col-sm-8 col-sm-offset-2 text-center">

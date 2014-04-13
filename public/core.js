@@ -48,4 +48,14 @@ function mainController($scope, $http) {
 			});
 	};
 
+	$scope.editTodo = function(id) {
+		$http.post('api/todos/update/' + id, {date : Date.now()})
+			.success(function(data) {
+				$scope.todos = data;
+			})
+			.error(function(data) {
+				console.log('Error: ' + data);
+			});
+	};
+
 }
