@@ -32,11 +32,12 @@
 		<div id="todo-list" class="row">
 			<div class="col-sm-4 col-sm-offset-4">
 				<!-- LOOP OVER THE TODOS IN $scope.todos -->
-				<div class="button" ng-repeat="todo in todos">
-						<button type="button" class="btn btn-primary" ng-click="updateTodo(todo._id)">Done</button>
-						<button type="button" class="btn btn-danger" ng-click="deleteTodo(todo._id)">Delete</button> 
-{{ todo.text }} <strong>{{todo.date | relativeDate }}</strong>
-
+				<div class = "container">
+				<div class="row" ng-repeat="todo in todos">
+					<button type="button" class="btn btn-primary col-sm-3" ng-click="updateTodo(todo._id)">Done</button>
+					<div class="col-sm-6">{{ todo.text }} <strong>{{todo.date | relativeDate }}</strong></div>
+					<button type="button" class="btn btn-danger col-sm-3" ng-click="deleteTodo(todo._id)">Delete</button>
+				</div>
 				</div>
 
 			</div>
